@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Project</title>
+    <!-- Bootstrap includes -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha3/css/bootstrap.css'/>
+</head>
+<body>
+    <div class="container">
+        <div class="col bg-dark text-light rounded mt-5">
+            <h1 class="text-center p-2">Coffee Company</h1>
+
+            <hr>
+
+            <div class="row p-4">
+
+                <div class="col">
+                    <div id="coffeeList">
+                        Loading...
+                    </div>
+                </div>
+    
+                <div class="col">
+                    <!-- Search form -->
+                    <form action="" class="col">
+                        <input class="form-control" type="text" placeholder="Search" id="coffeeSearch" name="coffeeSearch">
+                        <label for="roast"> <h4>Roast</h4></label>
+                        <select class="form-control" name="roast" id="roast">
+                            <option value="light">Light</option>
+                            <option value="medium">Medium</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+            
+
+
+        </div>
+    </div>
+</body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha3/js/bootstrap.bundle.js'></script>
+<script src="main.js"></script>
+</html>
