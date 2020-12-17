@@ -1,4 +1,4 @@
- class Search {
+class Search {
 
     domObject
 
@@ -12,10 +12,11 @@
     search(e){
         e.preventDefault();
 
-    }
- }
+}
 
- class Coffee {
+}
+
+class Coffee {
 
     name;
     roast;
@@ -42,17 +43,17 @@
         bigName.setAttribute("class","");
         smallName.setAttribute("class","px-2 font-weight-normal");
 
-        container.setAttribute("class","d-flex flex-column flex-sm-row align-items-end")
+        container.setAttribute("class","col col-md-9 col-lg-6 d-flex flex-row align-items-end")
 
         container.appendChild(bigName);
         container.appendChild(smallName);
         
         target.appendChild(container);
     }
-    
- }
 
- class List{
+}
+
+class List{
 
     domObject;
     coffees;
@@ -81,10 +82,29 @@
 
     }
 
- }
+}
 
- var search = new Search("coffeeSearch");
- var list = new List("coffeeList");
+var search = new Search("coffeeSearch");
+var list = new List("coffeeList");
 
- list.addCoffee(new Coffee())
- list.drawList()
+
+
+list.addCoffee(new Coffee())
+
+//sample data
+list.addCoffee(new Coffee("Light City","Light"));
+list.addCoffee(new Coffee("Half City","Light"));
+list.addCoffee(new Coffee("Cinnamon","Light"));
+list.addCoffee(new Coffee("City","Medium"));
+list.addCoffee(new Coffee("American","Medium"));
+list.addCoffee(new Coffee("Breakfast","Medium"));
+list.addCoffee(new Coffee("High","Dark"));
+list.addCoffee(new Coffee("Continental","Dark"));
+list.addCoffee(new Coffee("New Orleans","Dark"));
+list.addCoffee(new Coffee("European","Dark"));
+list.addCoffee(new Coffee("Espresso","Dark"));
+list.addCoffee(new Coffee("Viennese","Dark"));
+list.addCoffee(new Coffee("Italian","Dark"));
+list.addCoffee(new Coffee("French","Dark"));
+
+list.drawList()
