@@ -43,7 +43,7 @@ class Coffee {
         bigName.setAttribute("class","");
         smallName.setAttribute("class","px-2 font-weight-normal");
 
-        container.setAttribute("class","col col-md-9 col-lg-6 d-flex flex-row align-items-end")
+        container.setAttribute("class","col-12 col-lg-6 d-flex flex-row align-items-end ")
 
         container.appendChild(bigName);
         container.appendChild(smallName);
@@ -89,22 +89,27 @@ var list = new List("coffeeList");
 
 
 
-list.addCoffee(new Coffee())
 
-//sample data
-list.addCoffee(new Coffee("Light City","Light"));
-list.addCoffee(new Coffee("Half City","Light"));
-list.addCoffee(new Coffee("Cinnamon","Light"));
-list.addCoffee(new Coffee("City","Medium"));
-list.addCoffee(new Coffee("American","Medium"));
-list.addCoffee(new Coffee("Breakfast","Medium"));
-list.addCoffee(new Coffee("High","Dark"));
-list.addCoffee(new Coffee("Continental","Dark"));
-list.addCoffee(new Coffee("New Orleans","Dark"));
-list.addCoffee(new Coffee("European","Dark"));
-list.addCoffee(new Coffee("Espresso","Dark"));
-list.addCoffee(new Coffee("Viennese","Dark"));
-list.addCoffee(new Coffee("Italian","Dark"));
-list.addCoffee(new Coffee("French","Dark"));
 
-list.drawList()
+document.onload = ()=>{
+    //default values
+    list.addCoffee(new Coffee())
+
+    //sample data
+    list.addCoffee(new Coffee("Light City","Light"));
+    list.addCoffee(new Coffee("Half City","Light"));
+    list.addCoffee(new Coffee("Cinnamon","Light"));
+    list.addCoffee(new Coffee("City","Medium"));
+    list.addCoffee(new Coffee("American","Medium"));
+    list.addCoffee(new Coffee("Breakfast","Medium"));
+    list.addCoffee(new Coffee("High","Dark"));
+    list.addCoffee(new Coffee("Continental","Dark"));
+    list.addCoffee(new Coffee("New Orleans","Dark"));
+    list.addCoffee(new Coffee("European","Dark"));
+    list.addCoffee(new Coffee("Espresso","Dark"));
+    list.addCoffee(new Coffee("Viennese","Dark"));
+    list.addCoffee(new Coffee("Italian","Dark"));
+    list.addCoffee(new Coffee("French","Dark"));
+    
+    list.drawList()
+}
