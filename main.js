@@ -169,7 +169,7 @@ class Background{
         this.canvas.style.top = "0";
         this.canvas.style.left = "0";
         this.canvas.style.overflow = "hidden";
-        this.canvas.style.background = "lightgray";
+        this.canvas.style.background = "linear-gradient(180deg, rgba(44,127,213,1) 0%, rgba(94,192,247,1) 100%)";
         this.canvas.zIndex = "-2";
 
 
@@ -200,6 +200,10 @@ class Background{
         this.ready = false;
     }
 
+    setBackground(css){
+        this.canvas.style.background = css
+    }
+
     updateMouse(e){
         this.mousePos.x = e.clientX
         this.mousePos.y = e.clientY
@@ -210,24 +214,39 @@ class Background{
         this.canvas.height = window.innerHeight;
     }
 
-    addLayer(image, x = 0, y = 0, width, height,  index = this.layers.length){
+    addLayer(image, x = 0, y = 0, width, height, index = this.layers.length){
 
         this.ready = false
 
         var obj = {};
 
         obj.image = new Image();
+        obj.image.onerror = ()=>{
+            //if the image doesnt load proper load placeholder
+            obj.image.src = "data:image/png;base64,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";
+        }
+        
         obj.image.src = image;
+        
         obj.image.onload = ()=>{
             this.ready = true
         }
 
         obj.index = index;
-    
-        obj.width = width || obj.image.width;
-        obj.height = height || obj.image.height;
-        obj.xPos = x + (obj.width/2);
-        obj.yPos = y + (obj.height/2);
+
+        //accepts auto for size
+        if(typeof width == "string"){
+            width = obj.image.width
+        }
+        if(typeof height == "string"){
+            height = obj.image.height
+        }
+ 
+        obj.width = width  || obj.image.width ;
+        obj.height = height  || obj.image.height ;
+        obj.aspect = obj.width / obj.height
+        obj.xPos = x - (obj.width/2);
+        obj.yPos = y - (obj.height/2);
 
         this.layers.push(obj)
 
@@ -252,28 +271,21 @@ class Background{
             this.context.clearRect(0,0,this.canvas.width, this.canvas.height)
 
             //draws all objects 
-            this.context.rect(0,-600,20,20)
-
-            this.context.fillRect(
-                0 + (this.mousePos.x),
-                0 + (this.mousePos.y),
-                20,
-                20
-            )
-
             this.layers.forEach( object =>{
 
+                var width = object.width + this.canvas.width /2       
+
+                console.log(object.width)
                 this.context.drawImage(
                     object.image,
                     object.xPos + (this.mousePos.x/object.index),
                     object.yPos + (this.mousePos.y/object.index),
-                    object.width,
-                    object.height
+                    width ,
+                    width / object.aspect
                 )
 
             })
             
-
         }
 
         requestAnimationFrame(()=>this.animate())
@@ -287,7 +299,10 @@ var search = new Search("coffeeSearch",list);
 search.addFilter("roast","roast")
 var background = new Background()
 
-background.addLayer("img/mountains.png", 0,0 ,200,200,20)
+background.addLayer("img/mountainback.png", 750, 400, 500, 500,20)
+background.addLayer("img/mountainfront.png", 0, 400, 500, 500 ,17)
+background.addLayer("img/fronthill.png", 0, 900, "auto", "auto", 4)
+background.addLayer("img/backhill.png", 0, 1000, "auto", "auto",10)
 background.animate()
 
 
