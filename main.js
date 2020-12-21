@@ -41,9 +41,8 @@ class Search {
 
             this.filters.forEach( filter =>{
 
-                if(filter.domObject.value.toLowerCase() == "all") return false;
-                if(coffee[filter.name].toLowerCase() != filter.domObject.value.toLowerCase()){
-                    console.log("hits")
+                if(filter.domObject.value.toLowerCase() == "all" || filter.domObject.value.toLowerCase() == "") return false;
+                if(String(coffee[filter.name]).toLowerCase() != filter.domObject.value.toLowerCase()){
                     filterCheck = true;
                 }
                 
@@ -63,7 +62,9 @@ class Search {
     addFilter(domObject, filterName = `filter${this.filters.length}`){
 
         var element = document.getElementById(domObject);
-        if(element.constructor.name != "HTMLSelectElement") return false;
+
+        //TODO: change to accept any input type for forms
+        //if(element.constructor.name != "HTMLSelectElement") return false;
 
         this.filters.push({
             domObject: element,
@@ -90,11 +91,13 @@ class Coffee {
 
     name;
     roast;
+    cost;
 
-    constructor(name = "New Coffee", roast = "dark"){
+    constructor(name = "New Coffee", roast = "dark", cost = 2.99){
 
         this.name = name;
         this.roast = roast;
+        this.cost = cost;
 
         return true;
     }
@@ -250,7 +253,11 @@ class Background{
 
         this.layers.push(obj)
 
-        
+    }
+
+    animateLayer(layer, direction, speed){
+
+
     }
 
     animate(){
@@ -275,7 +282,6 @@ class Background{
 
                 var width = object.width + this.canvas.width /2       
 
-                console.log(object.width)
                 this.context.drawImage(
                     object.image,
                     object.xPos + (this.mousePos.x/object.index),
@@ -293,10 +299,14 @@ class Background{
 
 }
 
+
+
+
 var list = new List("coffeeList");
 
 var search = new Search("coffeeSearch",list);
 search.addFilter("roast","roast")
+search.addFilter("cost","cost")
 var background = new Background()
 
 background.addLayer("img/mountainback.png", 750, 400, 500, 500,20)
@@ -312,7 +322,7 @@ window.onload = ()=>{
     list.addCoffee(new Coffee())
 
     //sample data
-    list.addCoffee(new Coffee("Light City","Light"));
+    list.addCoffee(new Coffee("Light City","Light",99));
     list.addCoffee(new Coffee("Half City","Light"));
     list.addCoffee(new Coffee("Cinnamon","Light"));
     list.addCoffee(new Coffee("City","Medium"));
