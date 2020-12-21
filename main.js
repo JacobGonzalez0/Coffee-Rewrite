@@ -1,8 +1,24 @@
 class Search {
 
     domObject
+    data
+    filters
 
-    constructor(id){
+    constructor(id, list){
+
+        if(list == null){
+            document.body.append("No List specified on search")
+            document.body.style.background = "red"
+        }
+
+        if(list.constructor.name != "List"){
+            document.body.append("Invalid List")
+            document.body.style.background = "red"
+        }
+        
+        this.data = list
+
+        this.filters = []
 
         this.domObject = document.getElementById(id);
         this.domObject.addEventListener("keyup", event => this.search(event))
@@ -11,8 +27,62 @@ class Search {
 
     search(e){
         e.preventDefault();
+        
+        var searchValue = e.target.value.toLowerCase();
+        //if search is empty
+        var filteredData = []
 
-}
+        this.data.coffees.forEach( coffee =>{
+
+            //switches the coffee name to lowercase for the compare to be accurate
+            var coffeeCase = coffee.name.toLowerCase()
+            //check if coffee name has any part of the search term in there
+            var filterCheck = false;
+
+            this.filters.forEach( filter =>{
+
+                if(filter.domObject.value.toLowerCase() == "all") return false;
+                if(coffee[filter.name].toLowerCase() != filter.domObject.value.toLowerCase()){
+                    console.log("hits")
+                    filterCheck = true;
+                }
+                
+            })
+
+            if(coffeeCase.indexOf(searchValue) == -1 || filterCheck){
+                return false; 
+            }else{
+                filteredData.push(coffee);
+            }   
+        })
+
+        this.data.drawList(filteredData)
+        
+    }
+
+    addFilter(domObject, filterName = `filter${this.filters.length}`){
+
+        var element = document.getElementById(domObject);
+        if(element.constructor.name != "HTMLSelectElement") return false;
+
+        this.filters.push({
+            domObject: element,
+            name: filterName
+        })
+
+       element.addEventListener("change", event => this.filter())
+
+    }
+
+    filter(e){
+        this.search({
+            preventDefault : ()=>{
+                return
+            },
+            target : this.domObject
+        })
+    }
+
 
 }
 
@@ -84,14 +154,17 @@ class List{
 
 }
 
-var search = new Search("coffeeSearch");
+
 var list = new List("coffeeList");
 
+var search = new Search("coffeeSearch",list);
+search.addFilter("roast","roast")
 
+window.onload = ()=>{
 
+    
+    
 
-
-document.onload = ()=>{
     //default values
     list.addCoffee(new Coffee())
 
