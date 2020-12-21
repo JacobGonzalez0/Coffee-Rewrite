@@ -129,7 +129,6 @@ class List{
     coffees;
     display;
 
-
     constructor(id){
         this.domObject = document.getElementById(id);
         
@@ -154,16 +153,145 @@ class List{
 
 }
 
+class Background{
+
+    canvas
+    context
+    layers
+    limiter
+    mousePos
+    ready
+
+    constructor(){
+
+        this.canvas = document.createElement("canvas")
+        this.canvas.style.position = "fixed";
+        this.canvas.style.top = "0";
+        this.canvas.style.left = "0";
+        this.canvas.style.overflow = "hidden";
+        this.canvas.style.background = "lightgray";
+        this.canvas.zIndex = "-2";
+
+
+        this.context = this.canvas.getContext("2d")
+        document.body.appendChild(this.canvas)
+
+        this.layers = []
+
+        this.limiter = {
+            fps: 60,
+            then: new Date().getTime(),
+            now: new Date().getTime(),
+            delta: null,
+            interval: null,
+        }
+
+        this.limiter.interval = 1000 / this.limiter.fps
+
+        this.mousePos = {
+            x:0,
+            y:0
+        }
+
+        document.addEventListener("mousemove", event => this.updateMouse(event) )
+        window.addEventListener("resize", event => this.resizeCanvas(event) )
+
+        this.resizeCanvas()
+        this.ready = false;
+    }
+
+    updateMouse(e){
+        this.mousePos.x = e.clientX
+        this.mousePos.y = e.clientY
+    }
+
+    resizeCanvas(e){
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    addLayer(image, x = 0, y = 0, width, height,  index = this.layers.length){
+
+        this.ready = false
+
+        var obj = {};
+
+        obj.image = new Image();
+        obj.image.src = image;
+        obj.image.onload = ()=>{
+            this.ready = true
+        }
+
+        obj.index = index;
+    
+        obj.width = width || obj.image.width;
+        obj.height = height || obj.image.height;
+        obj.xPos = x + (obj.width/2);
+        obj.yPos = y + (obj.height/2);
+
+        this.layers.push(obj)
+
+        
+    }
+
+    animate(){
+
+        this.limiter.now = new Date().getTime();
+        this.limiter.delta = this.limiter.now - this.limiter.then
+
+        
+        if(this.limiter.delta > this.limiter.interval && this.ready ){
+            this.limiter.then = this.limiter.now - (this.limiter.delta % this.limiter.interval)
+
+            //exec loop
+            
+            //sorts out the index 
+            this.layers.sort((a, b) => b.index - a.index ) 
+            
+            //clears canvas
+            this.context.clearRect(0,0,this.canvas.width, this.canvas.height)
+
+            //draws all objects 
+            this.context.rect(0,-600,20,20)
+
+            this.context.fillRect(
+                0 + (this.mousePos.x),
+                0 + (this.mousePos.y),
+                20,
+                20
+            )
+
+            this.layers.forEach( object =>{
+
+                this.context.drawImage(
+                    object.image,
+                    object.xPos + (this.mousePos.x/object.index),
+                    object.yPos + (this.mousePos.y/object.index),
+                    object.width,
+                    object.height
+                )
+
+            })
+            
+
+        }
+
+        requestAnimationFrame(()=>this.animate())
+    }
+
+}
 
 var list = new List("coffeeList");
 
 var search = new Search("coffeeSearch",list);
 search.addFilter("roast","roast")
+var background = new Background()
+
+background.addLayer("img/mountains.png", 0,0 ,200,200,20)
+background.animate()
+
 
 window.onload = ()=>{
-
-    
-    
 
     //default values
     list.addCoffee(new Coffee())
@@ -186,3 +314,4 @@ window.onload = ()=>{
     
     list.drawList()
 }
+
