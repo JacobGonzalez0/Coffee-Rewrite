@@ -305,9 +305,8 @@ class Background{
 var list = new List("coffeeList");
 
 var search = new Search("coffeeSearch",list);
-search.addFilter("roast","roast")
-search.addFilter("cost","cost")
-var background = new Background()
+search.addFilter("roast","roast");
+var background = new Background();
 
 background.addLayer("img/mountainback.png", 750, 400, 500, 500,20)
 background.addLayer("img/mountainfront.png", 0, 400, 500, 500 ,17)
